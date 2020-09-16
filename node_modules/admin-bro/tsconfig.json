@@ -1,0 +1,32 @@
+{
+  "compilerOptions": {
+      "outDir": "./built",
+      "target": "esnext",
+      "esModuleInterop": true,
+      "jsx": "react",
+      "declaration": true,
+      "declarationDir": "./types",
+      "emitDeclarationOnly": true,
+      "strictNullChecks": true,
+      "strictPropertyInitialization": true,
+      "strictFunctionTypes": true,
+      "strictBindCallApply": true,
+      "noImplicitThis": true,
+      "moduleResolution": "node",
+      "types": [
+          "react",
+          "mocha",
+          "node"
+        ]
+  },
+  "include": [
+      "./vendor-types/**/*",
+      "./src/**/*",
+      "./spec/**/*"
+  ],
+  "exclude": [
+      "./example-app/**/*",
+      "./src/frontend/assets/**/*",
+      "./src/frontend/components/**/*stories.tsx",
+  ]
+}

@@ -1,0 +1,154 @@
+import { AxiosResponse, AxiosRequestConfig } from 'axios';
+import RecordJSON from '../../backend/decorators/record-json.interface';
+import { RecordActionResponse, ActionResponse, BulkActionResponse } from '../../backend/actions/action.interface';
+/**
+ * Extends {@link AxiosRequestConfig}
+ *
+ * @alias ResourceActionAPIParams
+ * @memberof ApiClient
+ * @property {any}   ...    any property supported by {@link AxiosRequestConfig}
+ */
+export declare type ResourceActionAPIParams = AxiosRequestConfig & {
+    /**
+     * id of a resource taken from {@link ResourceJSON}
+     */
+    resourceId: string;
+    /**
+     * action name taken from  {@link ActionJSON}
+     */
+    actionName: string;
+    /**
+     * query string
+     */
+    query?: string;
+};
+/**
+ * Extends {@link AxiosRequestConfig}
+ *
+ * @alias RecordActionAPIParams
+ * @memberof ApiClient
+ * @property {any}   ...    any property supported by {@link AxiosRequestConfig}
+ */
+export declare type RecordActionAPIParams = AxiosRequestConfig & {
+    /**
+     * id of a record taken from {@link RecordJSON}
+     */
+    recordId: string;
+    /**
+     * id of a resource taken from {@link ResourceJSON}
+     */
+    resourceId: string;
+    /**
+     * action name taken from  {@link ActionJSON}
+     */
+    actionName: string;
+};
+/**
+ * Extends {@link AxiosRequestConfig}
+ *
+ * @alias BulkActionAPIParams
+ * @memberof ApiClient
+ * @see https://github.com/axios/axios/blob/master/index.d.ts#L43
+ * @property {any}   ...    any property supported by {@link AxiosRequestConfig}
+ */
+export declare type BulkActionAPIParams = AxiosRequestConfig & {
+    /**
+     * id of a record taken from {@link RecordJSON}
+     */
+    recordIds: Array<string>;
+    /**
+     * id of a resource taken from {@link ResourceJSON}
+     */
+    resourceId: string;
+    /**
+     * action name taken from  {@link ActionJSON}
+     */
+    actionName: string;
+};
+/**
+ * Extends {@link AxiosRequestConfig}
+ *
+ * @alias GetPageAPIParams
+ * @memberof ApiClient
+ * @property {any}   ...    any property supported by {@link AxiosRequestConfig}
+ */
+export declare type GetPageAPIParams = AxiosRequestConfig & {
+    /**
+     * Unique page name
+     */
+    pageName: string;
+};
+/**
+ * Client which access the admin API.
+ * Use it to fetch data from auto generated AdminBro API.
+ *
+ * In the backend it uses [axios](https://github.com/axios/axios) client
+ * library.
+ *
+ * Usage:
+ * ```javascript
+ * import { ApiClient } from 'admin-bro'
+ *
+ * const api = new ApiClient()
+ * // fetching all records
+ * api.resourceAction({ resourceId: 'Comments', actionName: 'list' }).then(results => {...})
+ * ```
+ * @see https://github.com/axios/axios
+ */
+declare class ApiClient {
+    private baseURL;
+    private client;
+    constructor();
+    static getBaseUrl(): string;
+    /**
+     * Search by query string for records in a given resource.
+     *
+     * @param   {Object}  options
+     * @param   {String}  options.resourceId  id of a {@link ResourceJSON}
+     * @param   {String}  options.query       query string
+     *
+     * @return  {Promise<SearchResponse>}
+     */
+    searchRecords({ resourceId, query }: {
+        resourceId: string;
+        query: string;
+    }): Promise<Array<RecordJSON>>;
+    /**
+     * Invokes given resource {@link Action} on the backend.
+     *
+     * @param   {ResourceActionAPIParams}     options
+     * @return  {Promise<ActionResponse>}     response from an {@link Action}
+     */
+    resourceAction(options: ResourceActionAPIParams): Promise<AxiosResponse<ActionResponse>>;
+    /**
+     * Invokes given record {@link Action} on the backend.
+     *
+     * @param   {RecordActionAPIParams} options
+     * @return  {Promise<RecordActionResponse>}            response from an {@link Action}
+     */
+    recordAction(options: RecordActionAPIParams): Promise<AxiosResponse<RecordActionResponse>>;
+    /**
+     * Invokes given bulk {@link Action} on the backend.
+     *
+     * @param   {BulkActionAPIParams} options
+     * @return  {Promise<BulkActionResponse>}            response from an {@link Action}
+     */
+    bulkAction(options: BulkActionAPIParams): Promise<AxiosResponse<BulkActionResponse>>;
+    /**
+     * Invokes dashboard handler.
+     *
+     * @param   {AxiosRequestConfig}       options
+     * @return  {Promise<any>}             response from the handler function defined in
+     *                                     {@link AdminBroOptions#dashboard}
+     */
+    getDashboard(options?: AxiosRequestConfig): Promise<any>;
+    /**
+     * Invokes handler function of given page and returns its response.
+     *
+     * @param   {GetPageAPIParams}                options
+     * @return  {Promise<any>}                    response from the handler of given page
+     *                                            defined in {@link AdminBroOptions#pages}
+     */
+    getPage(options: GetPageAPIParams): Promise<any>;
+}
+export default ApiClient;
